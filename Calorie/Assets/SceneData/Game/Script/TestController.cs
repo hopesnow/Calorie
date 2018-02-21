@@ -6,6 +6,8 @@ public class TestController : MonoBehaviour
 {
   [SerializeField]
   PlayerMover mover;
+  [SerializeField]
+  PlayerAction action;
 
   Vector3 vec;
   // Update is called once per frame
@@ -36,6 +38,20 @@ public class TestController : MonoBehaviour
     if(Input.GetKeyDown(KeyCode.Space))
     {
       mover.Jump(1);
+    }
+
+    if(Input.GetKey(KeyCode.LeftShift))
+    {
+      action.StartAbsorbtion();
+    }
+    else
+    {
+      action.StopAbsorbtion();
+    }
+
+    if(Input.GetKey(KeyCode.RightShift))
+    {
+      action.Attack();
     }
 
 

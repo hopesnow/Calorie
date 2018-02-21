@@ -1,5 +1,5 @@
 ﻿//************************************************
-//PlayerAttackController.cs
+//PlayerActionController.cs
 //Author yt-hrd
 //************************************************
 using System.Collections;
@@ -7,10 +7,12 @@ using System.Collections.Generic;
 using UnityEngine;
 
 //************************************************
-//PlayerAttackController
+//PlayerActionController
 //プレイヤー攻撃定義
 //************************************************
-public interface PlayerAttacker
+public interface PlayerAtionController
 {
   void Attack();
+  void StartAbsorbtion();
+  void StopAbsorbtion();
 }
