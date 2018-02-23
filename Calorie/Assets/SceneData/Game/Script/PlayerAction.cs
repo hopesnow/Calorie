@@ -6,14 +6,6 @@ public class PlayerAction : MonoBehaviour, PlayerAtionController
 {
   [SerializeField]
   AbsorbtionObject absorbtionObject;
-  [SerializeField]
-  Player player;
-
-  void Start()
-  {
-    //吸い込み時処理追加
-    absorbtionObject.HitAction = player.ChargePower;
-  }
 
   public void StartAbsorbtion()
   {
@@ -27,6 +19,6 @@ public class PlayerAction : MonoBehaviour, PlayerAtionController
 
   public void Attack()
   {
-    player.UsePower();
+    Debug.Log("shot");
   }
 }
