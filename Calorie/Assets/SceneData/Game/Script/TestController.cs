@@ -5,9 +5,7 @@ using UnityEngine;
 public class TestController : MonoBehaviour
 {
   [SerializeField]
-  PlayerMover mover;
-  [SerializeField]
-  PlayerAction action;
+  PlayerController controller;
 
   Vector3 vec;
   // Update is called once per frame
@@ -37,30 +35,27 @@ public class TestController : MonoBehaviour
 
     if(Input.GetKeyDown(KeyCode.Space))
     {
-      mover.Jump(1);
+      controller.Jump();
     }
 
     if(Input.GetKey(KeyCode.LeftShift))
     {
-      action.StartAbsorbtion();
+      controller.StartAbsorbtion();
     }
     else
     {
-      action.StopAbsorbtion();
+      controller.StopAbsorbtion();
     }
 
     if(Input.GetKey(KeyCode.RightShift))
     {
-      action.Attack();
+      controller.Attack();
     }
 
 
-    //mover.Move(vec);
+    controller.Move(vec.normalized);
 
   }
 
-  private void FixedUpdate()
-  {
-    mover.Move(vec.normalized);
-  }
+
 }
