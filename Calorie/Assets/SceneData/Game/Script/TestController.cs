@@ -8,8 +8,6 @@ public class TestController : MonoBehaviour
   PlayerMover mover;
   [SerializeField]
   PlayerAction action;
-  [SerializeField]
-  int playerNo;
 
   Vector3 vec;
   // Update is called once per frame
