@@ -395,7 +395,6 @@ Camera:
   m_TargetEye: 3
   m_HDR: 1
   m_AllowMSAA: 1
-  m_AllowDynamicResolution: 0
   m_ForceIntoRT: 0
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
@@ -525,11 +524,9 @@ GameObject:
   - component: {fileID: 2045427539}
   - component: {fileID: 2045427538}
   - component: {fileID: 2045427544}
-  - component: {fileID: 2045427547}
   - component: {fileID: 2045427543}
-  - component: {fileID: 2045427545}
-  - component: {fileID: 2045427546}
   - component: {fileID: 2045427542}
+  - component: {fileID: 2045427545}
   m_Layer: 8
   m_Name: Player
   m_TagString: Untagged
@@ -615,7 +612,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7cd3570f90c5e64f94bd0abc9d9fc71, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  controller: {fileID: 2045427546}
+  mover: {fileID: 2045427543}
+  action: {fileID: 2045427545}
 --- !u!114 &2045427543
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -628,7 +626,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rigidbody: {fileID: 2045427544}
-  player: {fileID: 2045427547}
+  playerParam: {fileID: 11400000, guid: c433d24dcbdcbe04fb5ed82362bd5ae1, type: 2}
 --- !u!54 &2045427544
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -656,30 +654,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   absorbtionObject: {fileID: 345656886}
-  player: {fileID: 2045427547}
---- !u!114 &2045427546
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 2045427537}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: db7d773a3cfd1cb4b82a60c1ecabfb6c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &2045427547
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 2045427537}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c902ad2c187cb804cbeffb3a0258de06, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  param: {fileID: 11400000, guid: c433d24dcbdcbe04fb5ed82362bd5ae1, type: 2}
 --- !u!1 &2140324224
 GameObject:
   m_ObjectHideFlags: 0
@@ -741,9 +715,9 @@ MeshCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 3
+  serializedVersion: 2
   m_Convex: 0
-  m_CookingOptions: 14
+  m_InflateMesh: 0
   m_SkinWidth: 0.01
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!33 &2140324227

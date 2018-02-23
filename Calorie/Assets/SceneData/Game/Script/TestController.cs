@@ -5,7 +5,11 @@ using UnityEngine;
 public class TestController : MonoBehaviour
 {
   [SerializeField]
-  PlayerController controller;
+  PlayerMover mover;
+  [SerializeField]
+  PlayerAction action;
+  [SerializeField]
+  int playerNo;
 
   Vector3 vec;
   // Update is called once per frame
@@ -35,27 +39,30 @@ public class TestController : MonoBehaviour
 
     if(Input.GetButtonDown(string.Format("Player{0} Jump", playerNo))||Input.GetKeyDown(KeyCode.Space))
     {
-      controller.Jump();
+      mover.Jump(1);
     }
 
     if(Input.GetButton(string.Format("Player{0} Absorb", playerNo))||Input.GetKey(KeyCode.LeftShift))
     {
-      controller.StartAbsorbtion();
+      action.StartAbsorbtion();
     }
     else
     {
-      controller.StopAbsorbtion();
+      action.StopAbsorbtion();
     }
 
     if(Input.GetButton(string.Format("Player{0} Shot", playerNo))||Input.GetKey(KeyCode.RightShift))
     {
-      controller.Attack();
+      action.Attack();
     }
 
 
-    controller.Move(vec.normalized);
+    //mover.Move(vec);
 
   }
 
-
+  private void FixedUpdate()
+  {
+    mover.Move(vec.normalized);
+  }
 }
