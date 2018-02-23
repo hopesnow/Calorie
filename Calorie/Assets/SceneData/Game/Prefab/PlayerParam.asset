@@ -13,5 +13,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spd: 10
   jumpForce: 5
-  oneShotNeedPower: 0
-  maxPower: 0
+  oneShotNeedPower: 3
+  maxPower: 10
