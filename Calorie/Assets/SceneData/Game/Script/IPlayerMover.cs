@@ -1,5 +1,5 @@
 ﻿//************************************************
-// PlayerMoveController.cs
+// IPlayerMover.cs
 // Author yt-hrd
 //************************************************
 using System.Collections;
@@ -8,11 +8,12 @@ using UnityEngine;
 
 
 //************************************************
-//PlayerMoveController
+//IPlayerMover
 //プレイヤーの移動関数定義
 //************************************************
-public interface PlayerMoveController
+public interface IPlayerMover
 {
-  void Move(Vector3 vec);
+  //移動関数 vecは正規化前提
+  void Move(Vector3 vec,float spd);
   void Jump(float force);
 }

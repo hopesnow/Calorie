@@ -1,5 +1,5 @@
 ﻿//************************************************
-//PlayerActionController.cs
+//UnitySingleton.cs
 //Author yt-hrd
 //************************************************
 using System.Collections;
@@ -7,12 +7,18 @@ using System.Collections.Generic;
 using UnityEngine;
 
 //************************************************
-//PlayerActionController
-//プレイヤー攻撃定義
+//UnitySingleton
+//シングルトンクラス
+//Initを派生先で呼んでね
 //************************************************
-public interface PlayerAtionController
+public class UnitySingleton<T> : MonoBehaviour
 {
-  void Attack();
-  void StartAbsorbtion();
-  void StopAbsorbtion();
+  static T instance;
+
+  static public T Instance { get { return instance; } }
+
+  protected void Init(T ins)
+  {
+    instance = ins;
+  }
 }
