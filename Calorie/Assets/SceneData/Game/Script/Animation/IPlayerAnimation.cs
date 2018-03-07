@@ -16,5 +16,6 @@ public interface IPlayerAnimation
   void PlayWalking();
   void PlayRunning();
   void PlayJumping();
+  void PlayAttack();
 
 }

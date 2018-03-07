@@ -1,5 +1,5 @@
 ﻿//************************************************
-//PlayerAnimationController.cs
+//PlayerAnimation.cs
 //Author yt-hrd
 //************************************************
 using System.Collections;
@@ -7,10 +7,10 @@ using System.Collections.Generic;
 using UnityEngine;
 
 //************************************************
-//PlayerAnimationController
+//PlayerAnimation
 //プレイヤーのアニメーション再生制御クラス
 //************************************************
-public class PlayerAnimationController : MonoBehaviour,IPlayerAnimation
+public class PlayerAnimation : MonoBehaviour,IPlayerAnimation
 {
   [SerializeField]
   Animator animator;
@@ -43,6 +43,11 @@ public class PlayerAnimationController : MonoBehaviour,IPlayerAnimation
   public void PlayWalking()
   {
     Play("Walking", 1);
+  }
+
+  public void PlayAttack()
+  {
+    animator.PlayInFixedTime("Attack", 1);
   }
   #endregion
 

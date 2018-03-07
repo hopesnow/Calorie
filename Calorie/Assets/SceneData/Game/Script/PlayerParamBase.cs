@@ -1,5 +1,5 @@
 ﻿//************************************************
-//PlayerParam.cs
+//PlayerParamBase.cs
 //Author yt-hrd
 //************************************************
 using System.Collections;
@@ -8,10 +8,10 @@ using UnityEngine;
 
 //************************************************
 //PlayerParam
-//プレイヤー性能
+//プレイヤー性能 基礎値
 //************************************************
-[CreateAssetMenu(fileName = "PlayerParam",menuName = "CreatePlayerParam",order =100)]
-public class PlayerParam : ScriptableObject
+[CreateAssetMenu(fileName = "PlayerParamBase",menuName = "CreatePlayerParamBase",order =100)]
+public class PlayerParamBase : ScriptableObject
 {
   [SerializeField]
   float spd;
