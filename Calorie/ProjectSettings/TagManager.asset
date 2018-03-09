@@ -13,12 +13,12 @@ TagManager:
   - UI
   - 
   - 
-  - Player
-  - Stage
-  - Enemy
-  - Absorption
-  - 
-  - 
+  - Player0
+  - Player1
+  - Player2
+  - Player3
+  - Block
+  - ReflectionObject
   - 
   - 
   - 

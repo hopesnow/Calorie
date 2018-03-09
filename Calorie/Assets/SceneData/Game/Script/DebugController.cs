@@ -7,9 +7,19 @@ public class DebugController : MonoBehaviour
 {
   [SerializeField]
   PlayerController controller;
-  
-	// Update is called once per frame
-	void Update ()
+  [SerializeField]
+  SprayWaterParticle test;
+  [SerializeField]
+  Collider[] tests;
+
+  private void Start()
+  {
+    test.SetupCollision(0);
+    test.SetupTrigger(tests);
+  }
+
+  // Update is called once per frame
+  void Update ()
   {
     Vector3 vec = Vector3.zero;
 
@@ -32,6 +42,9 @@ public class DebugController : MonoBehaviour
     {
       vec.x += 1;
     }
+
+    test.SetActiveEmitter(Input.GetKey(KeyCode.LeftShift));
+  
 
     controller.Move(vec.normalized);
 
