@@ -7,13 +7,13 @@ using System.Collections.Generic;
 using UnityEngine;
 
 //************************************************
-//AnimationSyt
+//AnimationStateTransition
 //
 //************************************************
 public class AnimationStateTransition : StateMachineBehaviour
 {
   [SerializeField]
-  string nextState;
+  string nextState;//アニメーション終了時に自動遷移したいステート名　なければ空欄
   [SerializeField]
   float nextDurationTime;
 
