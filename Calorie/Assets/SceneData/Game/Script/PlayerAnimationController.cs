@@ -12,25 +12,28 @@ using UnityEngine;
 //************************************************
 public class PlayerAnimationController : MonoBehaviour
 {
-  [SerializeField]
-  Rigidbody rigidbody;//移動してるかどうかとる
+    [SerializeField]
+    Rigidbody rigidbody;//移動してるかどうかとる
 
-  IPlayerAnimation animation;
+    IPlayerAnimation animation;
 
-	// Use this for initialization
-	void Start ()
-  {
-    animation = GetComponent<IPlayerAnimation>();
-  }
-	
-	// Update is called once per frame
-	void Update ()
-  {
-    Vector3 vel = rigidbody.velocity;
-
-    if (vel.x != 0 || vel.y != 0)
+    // Use this for initialization
+    void Start()
     {
-      animation.PlayRunning();
+        animation = GetComponent<IPlayerAnimation>();
     }
-	}
+
+    // Update is called once per frame
+    void Update()
+    {
+        Vector3 vel = rigidbody.velocity;
+        if (Mathf.Abs(vel.x) > 0.01f || Mathf.Abs(vel.z) > 0.01f)
+        {
+            animation.PlayRunning();
+        }
+        else
+        {
+            animation.PlayIdle();
+        }
+    }
 }
