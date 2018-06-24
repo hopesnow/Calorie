@@ -21,7 +21,7 @@ public class NormalShot : MonoBehaviour
     [SerializeField] private float maxSpeed = 1.0f;
     [SerializeField] private float minSpeed = 0.65f;
 
-    [SerializeField] private float upAccel = 0.1f;
+    [SerializeField] private float upAccel = 0.3f;
     [SerializeField] private float downAccel = 0.03f;
 
     [SerializeField] private float knockbackPower = 5f;
