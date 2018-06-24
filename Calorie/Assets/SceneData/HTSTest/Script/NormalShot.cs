@@ -7,18 +7,26 @@ using UnityEngine;
 public class NormalShot : MonoBehaviour
 {
     [SerializeField] private ParticleSystem particle;
+    [SerializeField] private Collider collider;
+    [SerializeField] private float initSize = 1.75f;
+    [SerializeField] private float initSpeed = 0.55f;
+    [SerializeField] private float decaySpeed = 0.03f;
+    [SerializeField] private float minimumSpeed = 0.15f;
+    [SerializeField] private float knockbackPower = 5f;
+
+    private const float PowerMagni = 1000f;  // power倍率
 
     private Vector3 vec;
     private float speed;
     private float size;
-    private const float InitSpeed = 0.6f;
-    private const float DecaySpeed = 0.01f;
-    private const float MinimumSpeed = 0.2f;
 
     // 親オブジェクトの名前(あたり判定用)
     private string parentName = string.Empty;
 
     private float destroyRange = 50f;
+
+    private bool shotInvalid = false;
+    private float deathTime = float.MaxValue;
 
     /// <summary>
     /// 初期化処理
@@ -29,8 +37,8 @@ public class NormalShot : MonoBehaviour
     public void Init(Vector3 vec, string parentName)// , float spd = 1.0f, float scale = 1.0f)
     {
         this.vec = vec.normalized;
-        this.speed = InitSpeed;
-        this.size = 1.0f;
+        this.speed = initSpeed;
+        this.size = initSize;
         this.parentName = parentName;
     }
 
@@ -39,17 +47,31 @@ public class NormalShot : MonoBehaviour
     /// </summary>
     private void Update()
     {
-        // 座標の更新
-        this.transform.localPosition += this.vec * this.speed;
 
-        // 速度減衰処理
-        if (this.speed < MinimumSpeed)
+        if (shotInvalid)
         {
-            this.speed = MinimumSpeed;
+            if (this.deathTime <= 0)
+            {
+                Destroy(this.gameObject);
+            }
+
+            // ショットが消えるまでのカウントダウン
+            this.deathTime -= Time.deltaTime;
         }
         else
         {
-            this.speed -= DecaySpeed;
+            // 座標の更新
+            this.transform.localPosition += this.vec * this.speed;
+        }
+
+        // 速度減衰処理
+        if (this.speed < minimumSpeed)
+        {
+            this.speed = minimumSpeed;
+        }
+        else
+        {
+            this.speed -= decaySpeed;
         }
 
         // 範囲外チェック
@@ -66,11 +88,22 @@ public class NormalShot : MonoBehaviour
     /// <summary>
     /// 当たり判定
     /// </summary>
-    /// <param name="collision">判定オブジェクト</param>
-    private void OnTriggerEnter(Collider collider)
+    /// <param name="coll">判定オブジェクト</param>
+    private void OnTriggerEnter(Collider coll)
     {
+        // 自身の場合は何もしない
+        if (coll.gameObject.name == this.parentName)
+            return;
+        
         // collision.gameObject.GetComponent
-        Debug.LogFormat("弾が当たったオブジェクト: {0}", collider.gameObject.name);
+        Debug.LogFormat("弾が当たったオブジェクト: {0}", coll.gameObject.name);
+
+        var player = coll.gameObject.GetComponent<PlayerController>();
+        if (player != null)
+        {
+            player.Knockback(this.vec, this.knockbackPower * PowerMagni * this.speed);
+            InvalidShot();
+        }
     }
 
     /// <summary>
@@ -79,5 +112,9 @@ public class NormalShot : MonoBehaviour
     /// </summary>
     private void InvalidShot()
     {
+        this.shotInvalid = true;
+        this.particle.Stop();
+        this.collider.enabled = false;
+        this.deathTime = this.particle.main.duration;
     }
 }
