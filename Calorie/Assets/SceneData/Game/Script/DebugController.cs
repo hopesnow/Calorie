@@ -32,6 +32,7 @@ public class DebugController : MonoBehaviour
     private Vector3 initPos;
 
     private float delayMove = 0f;
+    private float delayShot = 0f;
 
     public bool IsAttackable { get { return this.moveState == PlayerMoveState.Movable; } }
 
@@ -110,7 +111,8 @@ public class DebugController : MonoBehaviour
         if (Input.GetButtonDown(string.Format("Player{0} Shot", playerNo)) && IsAttackable)
         {
             // StartCoroutine(ShotSpray());
-            Shot1();
+            if(this.delayShot <= 0)
+                Shot1();
         }
 
         // 移動処理
@@ -125,6 +127,10 @@ public class DebugController : MonoBehaviour
                 this.delayMove -= Time.deltaTime;
             }
         }
+        if (delayShot > 0)
+        {
+            this.delayShot -= Time.deltaTime;
+        }
     }
 
     // 通常ショット１仮
@@ -132,6 +138,7 @@ public class DebugController : MonoBehaviour
     {
         this.controller.Shot(this.shotParent);
         delayMove = 0.5f;
+        delayShot = 0.5f;
     }
 
     private IEnumerator ShotSpray()
