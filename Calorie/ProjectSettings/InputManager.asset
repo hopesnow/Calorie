@@ -67,7 +67,7 @@ InputManager:
     snap: 0
     invert: 0
     type: 0
-    axis: 0
+    axis: 1
     joyNum: 0
   - serializedVersion: 3
     m_Name: Player0 Jump
@@ -179,7 +179,7 @@ InputManager:
     snap: 0
     invert: 0
     type: 0
-    axis: 0
+    axis: 1
     joyNum: 0
   - serializedVersion: 3
     m_Name: Player1 Jump
@@ -291,7 +291,7 @@ InputManager:
     snap: 0
     invert: 0
     type: 0
-    axis: 0
+    axis: 1
     joyNum: 0
   - serializedVersion: 3
     m_Name: Player2 Jump
@@ -403,7 +403,7 @@ InputManager:
     snap: 0
     invert: 0
     type: 0
-    axis: 0
+    axis: 1
     joyNum: 0
   - serializedVersion: 3
     m_Name: Player3 Jump

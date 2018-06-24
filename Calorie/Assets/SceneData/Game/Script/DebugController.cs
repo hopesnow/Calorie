@@ -82,29 +82,29 @@ public class DebugController : MonoBehaviour
         // UI操作処理
         vec = this.input;
 
-        if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow))
+        if (Input.GetAxisRaw(string.Format("Player{0} Vertical", playerNo)) > 0)
         {
             vec.z += 1;
         }
 
-        if (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow))
+        if (Input.GetAxisRaw(string.Format("Player{0} Vertical", playerNo)) < 0)
         {
             vec.z -= 1;
         }
 
-        if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
+        if (Input.GetAxisRaw(string.Format("Player{0} Horizontal", playerNo)) < 0)
         {
             vec.x -= 1;
         }
 
-        if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
+        if (Input.GetAxisRaw(string.Format("Player{0} Horizontal", playerNo)) > 0)
         {
             vec.x += 1;
         }
 
 
         // 放水処理
-        if (Input.GetKeyDown(KeyCode.Space) && IsAttackable)
+        if (Input.GetButtonDown(string.Format("Player{0} Shot", playerNo)) && IsAttackable)
         {
             StartCoroutine(ShotSpray());
         }
