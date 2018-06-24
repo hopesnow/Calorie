@@ -2,17 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameOverTrigger : MonoBehaviour {
-
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+public class GameOverTrigger : MonoBehaviour
+{
     private void OnTriggerExit(Collider exitObject)
     {
         if(exitObject.tag == "Player")

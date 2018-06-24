@@ -71,6 +71,8 @@ public class DebugController : MonoBehaviour
             this.resetButton.onClick.AddListener(() =>
             {
                 GetComponent<Transform>().localPosition = this.initPos;
+                this.gameObject.SetActive(true);
+                this.isPlayer = true;
             });
         }
     }
@@ -163,5 +165,6 @@ public class DebugController : MonoBehaviour
     public void SetGameOver()
     {
         isPlayer = false;
+        this.gameObject.SetActive(false);
     }
 }
