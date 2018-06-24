@@ -11,6 +11,7 @@ public class PlayerController : MonoBehaviour
     private Vector3 forceVec = Vector3.zero;
     private float forcePower = 0f;
     private float forceDecay = 0.9f;
+    private float moveSpeed = 3f;
 
     private void Start()
     {
@@ -30,7 +31,7 @@ public class PlayerController : MonoBehaviour
 
     public void Move(Vector3 vector)
     {
-        mover.Move(vector, 2);
+        mover.Move(vector, this.moveSpeed);
     }
 
     public void Shot(Transform parent)

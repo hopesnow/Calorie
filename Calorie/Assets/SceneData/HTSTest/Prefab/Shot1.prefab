@@ -73,10 +73,12 @@ MonoBehaviour:
   particle: {fileID: 198991429052086988}
   collider: {fileID: 135062426674602432}
   initSize: 1.75
-  initSpeed: 0.55
-  decaySpeed: 0.03
-  minimumSpeed: 0.15
-  knockbackPower: 1000
+  initSpeed: 0.15
+  maxSpeed: 0.75
+  minSpeed: 0.35
+  upAccel: 0.3
+  downAccel: 0.03
+  knockbackPower: 12000
 --- !u!135 &135062426674602432
 SphereCollider:
   m_ObjectHideFlags: 1

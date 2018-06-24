@@ -18,8 +18,8 @@ public class NormalShot : MonoBehaviour
     [SerializeField] private float initSize = 1.75f;
 
     [SerializeField] private float initSpeed = 0.1f;
-    [SerializeField] private float maxSpeed = 0.6f;
-    [SerializeField] private float minSpeed = 0.15f;
+    [SerializeField] private float maxSpeed = 1.0f;
+    [SerializeField] private float minSpeed = 0.65f;
 
     [SerializeField] private float upAccel = 0.1f;
     [SerializeField] private float downAccel = 0.03f;
@@ -118,6 +118,7 @@ public class NormalShot : MonoBehaviour
         if (player != null)
         {
             var power = this.knockbackPower * Mathf.Sqrt(this.speed);
+            Debug.LogFormat("ショットパワー: {0}", this.speed);
             player.Knockback(this.vec, power);
             InvalidShot();
         }
