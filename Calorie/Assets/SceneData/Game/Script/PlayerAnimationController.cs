@@ -29,11 +29,11 @@ public class PlayerAnimationController : MonoBehaviour
         Vector3 vel = rigidbody.velocity;
         if (Mathf.Abs(vel.x) > 0.01f || Mathf.Abs(vel.z) > 0.01f)
         {
-            animation.PlayRunning();
+            //animation.PlayRunning();
         }
         else
         {
-            animation.PlayIdle();
+            //animation.PlayIdle();
         }
     }
 }

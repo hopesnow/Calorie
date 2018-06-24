@@ -15,6 +15,9 @@ public class PlayerAnimation : MonoBehaviour,IPlayerAnimation
   [SerializeField]
   Animator animator;
 
+    [SerializeField]
+    int playerNo;
+
   int currentState;
 
   bool isFade = false;//遷移中確認用
@@ -24,6 +27,18 @@ public class PlayerAnimation : MonoBehaviour,IPlayerAnimation
     currentState = animator.GetCurrentAnimatorStateInfo(0).fullPathHash;
   }
 
+  void Update()
+  {
+    float dx = Input.GetAxisRaw(string.Format("Player{0} Horizontal", playerNo));
+    float dz = Input.GetAxisRaw(string.Format("Player{0} Vertical", playerNo));
+    var input = new Vector3(dx, 0f, dz);
+    float mag = input.magnitude;
+    if(mag>1.0f)mag = 1.0f;
+    if(mag>0.05f)animator.SetFloat("Blend", mag);
+    else animator.SetFloat("Blend", 0f);
+
+  }
+  
   #region 再生関数群
   public void PlayIdle()
   {
