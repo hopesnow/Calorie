@@ -18,6 +18,8 @@ public class PlayerAnimation : MonoBehaviour,IPlayerAnimation
     [SerializeField]
     int playerNo;
 
+    private bool isGameOver;
+
   int currentState;
 
   bool isFade = false;//遷移中確認用
@@ -25,10 +27,13 @@ public class PlayerAnimation : MonoBehaviour,IPlayerAnimation
   void Start()
   {
     currentState = animator.GetCurrentAnimatorStateInfo(0).fullPathHash;
+    isGameOver = false;
   }
 
   void Update()
   {
+    if(isGameOver)
+      return;
     float dx = Input.GetAxisRaw(string.Format("Player{0} Horizontal", playerNo));
     float dz = Input.GetAxisRaw(string.Format("Player{0} Vertical", playerNo));
     var input = new Vector3(dx, 0f, dz);
@@ -111,4 +116,10 @@ public class PlayerAnimation : MonoBehaviour,IPlayerAnimation
     yield return new WaitForSeconds(duration);
     isFade = false;
   }
+
+  public void SetGameOver()
+  {
+        isGameOver = true;
+        animator.SetFloat("Blend", 0f);
+    }
 }

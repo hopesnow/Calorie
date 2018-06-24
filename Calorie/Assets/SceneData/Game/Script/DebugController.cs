@@ -159,4 +159,9 @@ public class DebugController : MonoBehaviour
         this.moveState = PlayerMoveState.Movable;
         sprayShot.SetActiveEmitter(false);
     }
+
+    public void SetGameOver()
+    {
+        isPlayer = false;
+    }
 }
