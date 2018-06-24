@@ -24,11 +24,14 @@ public class DebugController : MonoBehaviour
     [SerializeField] private Button shotButton;
     [SerializeField] private Button resetButton;
 
+    [SerializeField] private Transform shotParent;
     [SerializeField] private ParticleSystem shot1;
 
     private PlayerMoveState moveState = PlayerMoveState.Movable;
     private Vector3 input;
     private Vector3 initPos;
+
+    private float delayMove = 0f;
 
     public bool IsAttackable { get { return this.moveState == PlayerMoveState.Movable; } }
 
@@ -106,18 +109,29 @@ public class DebugController : MonoBehaviour
         // 放水処理
         if (Input.GetButtonDown(string.Format("Player{0} Shot", playerNo)) && IsAttackable)
         {
-            StartCoroutine(ShotSpray());
+            // StartCoroutine(ShotSpray());
+            Shot1();
         }
 
         // 移動処理
         if (this.moveState == PlayerMoveState.Movable)
         {
-            controller.Move(vec.normalized * moveSpeed);
+            if (this.delayMove <= 0)
+            {
+                controller.Move(vec.normalized * moveSpeed);
+            }
+            else
+            {
+                this.delayMove -= Time.deltaTime;
+            }
         }
     }
 
+    // 通常ショット１仮
     private void Shot1()
     {
+        this.controller.Shot(this.shotParent);
+        delayMove = 0.5f;
     }
 
     private IEnumerator ShotSpray()
