@@ -58,12 +58,15 @@ public class MoveButtonController : MonoBehaviour, IPointerDownHandler, IPointer
         if (this.isPress)
         {
             // ボタンを押した場所からの差分
+            /*
             Vector2 touchPos;
 #if !UNITY_EDITOR && (UNITY_IOS || UNITY_ANDROID)
             touchPos = Input.touches[this.touchIndex].position;
 #else
             touchPos = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
 #endif
+            */
+
             // var diff = new Vector3(touchPos.x - this.mouseDownPosition.x, 0,  touchPos.y - this.mouseDownPosition.y);
 
             var diff = this.dragDiff;

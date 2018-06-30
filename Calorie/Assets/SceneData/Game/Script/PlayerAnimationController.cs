@@ -12,18 +12,17 @@ using UnityEngine;
 //************************************************
 public class PlayerAnimationController : MonoBehaviour
 {
-    [SerializeField]
-    Rigidbody rigidbody;//移動してるかどうかとる
+    [SerializeField] private Rigidbody rigidbody;//移動してるかどうかとる
 
     IPlayerAnimation animation;
 
-    // Use this for initialization
+    // 初期化処理
     void Start()
     {
         animation = GetComponent<IPlayerAnimation>();
     }
 
-    // Update is called once per frame
+    // 更新処理
     void Update()
     {
         Vector3 vel = rigidbody.velocity;

@@ -14,7 +14,7 @@ public class NormalShot : MonoBehaviour
     }
 
     [SerializeField] private ParticleSystem particle;
-    [SerializeField] private Collider collider;
+    [SerializeField] private Collider shotColl;
     [SerializeField] private float initSize = 1.75f;
 
     [SerializeField] private float initSpeed = 0.1f;
@@ -28,7 +28,6 @@ public class NormalShot : MonoBehaviour
 
     private Vector3 vec;
     private float speed;
-    private float size;
 
     // 親オブジェクトの名前(あたり判定用)
     private string parentName = string.Empty;
@@ -47,7 +46,6 @@ public class NormalShot : MonoBehaviour
     {
         this.vec = vec.normalized;
         this.speed = initSpeed;
-        this.size = initSize;
         this.parentName = parentName;
     }
 
@@ -112,7 +110,6 @@ public class NormalShot : MonoBehaviour
             return;
         
         // collision.gameObject.GetComponent
-        Debug.LogFormat("弾が当たったオブジェクト: {0}", coll.gameObject.name);
 
         var player = coll.gameObject.GetComponent<PlayerController>();
         if (player != null)
@@ -149,7 +146,7 @@ public class NormalShot : MonoBehaviour
         // this.shotInvalid = true;
         this.shotState = State.Invalid;
         this.particle.Stop();
-        this.collider.enabled = false;
+        this.shotColl.enabled = false;
         this.deathTime = this.particle.main.duration;
     }
 }
