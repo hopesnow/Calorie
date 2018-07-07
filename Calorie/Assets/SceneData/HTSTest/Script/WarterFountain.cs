@@ -16,7 +16,7 @@ public class WarterFountain : MonoBehaviour
         var player = coll.gameObject.GetComponent<PlayerController>();
         if (player != null)
         {
-            player.Replenishment(1);
+            // player.Replenishment(1); // obsoleted
 
             InvalidFountain();
 

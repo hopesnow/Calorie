@@ -117,14 +117,16 @@ public class DebugController : MonoBehaviour
                 Shot1();
         }
 
-        //給水処理
+        //給水開始処理
         if (Input.GetButtonDown(string.Format("Player{0} Absorb", playerNo)))
         {
-            Debug.Log(String.Format("Player{0} Absorb Down", playerNo));
+            controller.StartCharge();
         }
-        else if (Input.GetButtonUp(string.Format("Player{0} Absorb", playerNo)))
+
+        // 給水終了処理
+        if (Input.GetButtonUp(string.Format("Player{0} Absorb", playerNo)))
         {
-            Debug.Log(String.Format("Player{0} Absorb Up", playerNo));
+            controller.EndCharge();
         }
 
         // 移動処理

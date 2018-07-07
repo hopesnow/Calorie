@@ -9,17 +9,19 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private PlayerEnergy energyPrefab;
     private Rigidbody rigidbody;
 
-    private const int MaxCharge = 7;
+    private const int PerShot = 7;              // 100%から何発打
     private const float MaxChargeSpeed = 3f;    // マックスになるために必要なチャージ時間
-    private ReactiveProperty<int> charge = new ReactiveProperty<int>();
+    private ReactiveProperty<float> charge = new ReactiveProperty<float>();
+    private float ChargePerShot { get { return 1f / PerShot; } }   // 一発あたりのcharge量
 
     private Vector3 forceVec = Vector3.zero;
     private float forcePower = 0f;
     private float forceDecay = 0.9f;
     private float moveSpeed = 3f;
 
-    private bool isChargable = false;
-    private IDisposable chargeDispose = null;
+    private bool isChargable = false;           // 給水可能フラグ
+    private IDisposable isChargeDispose = null; // 給水可能フラグの検知用
+    private bool charging = false;              // 給水中フラグ
 
     // 初期化処理
     private void Start()
@@ -27,17 +29,17 @@ public class PlayerController : MonoBehaviour
         this.rigidbody = GetComponent<Rigidbody>();
         mover = GetComponent<IPlayerMover>();
 
-        this.charge.Value = 5;
+        this.charge.Value = 0.5f;
 
         // UI系の初期化処理
         var energy = Instantiate(this.energyPrefab, FieldManager.Instance.uiParent);
         energy.SetTarget(this.transform);
-        energy.ChangeRemainPercent((float)this.charge.Value / MaxCharge);
+        energy.ChangeRemainPercent(this.charge.Value);
 
         // 残弾更新処理の登録
         this.charge.Subscribe(remain =>
         {
-            energy.ChangeRemainPercent((float)remain / MaxCharge);
+            energy.ChangeRemainPercent(remain);
         });
     }
 
@@ -50,6 +52,12 @@ public class PlayerController : MonoBehaviour
             this.rigidbody.AddForce(this.forceVec * this.forcePower);
             this.forcePower *= this.forceDecay; // 少しずつ減衰する
         }
+
+        // 給水処理
+        if (this.charging)
+        {
+            Charge();
+        }
     }
 
     public void Move(Vector3 vector)
@@ -60,12 +68,12 @@ public class PlayerController : MonoBehaviour
     // 可能であればショットをする
     public void Shot(Transform parent)
     {
-        if(this.charge.Value > 0)
+        if (this.charge.Value > ChargePerShot)
         {
             var shot = Instantiate(shotPrefab, parent);
             shot.transform.localPosition = this.transform.localPosition + new Vector3(0f, 1f, 0f);
             shot.Init(this.transform.forward, this.gameObject.name);
-            this.charge.Value -= 1;
+            this.charge.Value -= ChargePerShot;
         }
     }
 
@@ -77,22 +85,42 @@ public class PlayerController : MonoBehaviour
     }
 
     // 補充処理
+    [Obsolete]
     public void Replenishment(int chargePower)
     {
         this.charge.Value += chargePower;
-        if (this.charge.Value > MaxCharge)
+        if (this.charge.Value > PerShot)
         {
-            this.charge.Value = MaxCharge;
+            this.charge.Value = PerShot;
         }
     }
 
+    // チャージ開始
+    public void StartCharge()
+    {
+        this.charging = true;
+    }
+
+    // チャージ終了
+    public void EndCharge()
+    {
+        this.charging = false;
+    }
+
     // チャージをしようとする
-    public void TryCharge()
+    public void Charge()
     {
         // チャージ可能であればチャージする
         if (this.isChargable)
         {
-            Replenishment(1);
+            if (this.charge.Value < 1f)
+            {
+                this.charge.Value += Time.deltaTime / MaxChargeSpeed;
+                if (this.charge.Value > 1f)
+                {
+                    this.charge.Value = 1f;
+                }
+            }
         }
     }
 
@@ -105,14 +133,14 @@ public class PlayerController : MonoBehaviour
             var stoneFountain = coll.GetComponent<StoneFountain>();
             if (stoneFountain != null)
             {
-                if (this.chargeDispose != null)
+                if (this.isChargeDispose != null)
                 {
-                    this.chargeDispose.Dispose();
-                    this.chargeDispose = null;
+                    this.isChargeDispose.Dispose();
+                    this.isChargeDispose = null;
                 }
 
                 // チャージ可能フラグの監視処理
-                this.chargeDispose = stoneFountain.Playing.Subscribe(playing =>
+                this.isChargeDispose = stoneFountain.Playing.Subscribe(playing =>
                 {
                     this.isChargable = playing;
                 });
@@ -126,10 +154,10 @@ public class PlayerController : MonoBehaviour
         // 噴水から離れたときの判定
         if (coll.gameObject.CompareTag("Fountain"))
         {
-            if (this.chargeDispose != null)
+            if (this.isChargeDispose != null)
             {
-                this.chargeDispose.Dispose();
-                this.chargeDispose = null;
+                this.isChargeDispose.Dispose();
+                this.isChargeDispose = null;
             }
 
             this.isChargable = false;
