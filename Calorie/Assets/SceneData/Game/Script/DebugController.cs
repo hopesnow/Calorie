@@ -117,6 +117,16 @@ public class DebugController : MonoBehaviour
                 Shot1();
         }
 
+        //給水処理
+        if (Input.GetButtonDown(string.Format("Player{0} Absorb", playerNo)))
+        {
+            Debug.Log(String.Format("Player{0} Absorb Down", playerNo));
+        }
+        else if (Input.GetButtonUp(string.Format("Player{0} Absorb", playerNo)))
+        {
+            Debug.Log(String.Format("Player{0} Absorb Up", playerNo));
+        }
+
         // 移動処理
         if (this.moveState == PlayerMoveState.Movable)
         {
