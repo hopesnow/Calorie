@@ -33,6 +33,7 @@ public class DebugController : MonoBehaviour
 
     private float delayMove = 0f;
     private float delayShot = 0f;
+    private float shotCharge = 0f;
 
     public bool IsAttackable { get { return this.moveState == PlayerMoveState.Movable; } }
 
@@ -108,14 +109,31 @@ public class DebugController : MonoBehaviour
             vec.x += 1;
         }
 
+        // チャージ処理
+        if (Input.GetButton(string.Format("Player{0} Shot", playerNo)))
+        {
+            // ショット可能かどうか
+            if (this.delayShot <= 0)
+            {
+                this.shotCharge += Time.deltaTime;
+            }
+        }
 
-        // 放水処理
+        // チャージ終了処理
+        if (Input.GetButtonUp(string.Format("Player{0} Shot", playerNo)) && IsAttackable)
+        {
+            CompleteShot();
+        }
+
+        // ショット処理
+        /*
         if (Input.GetButtonDown(string.Format("Player{0} Shot", playerNo)) && IsAttackable)
         {
             // StartCoroutine(ShotSpray());
             if(this.delayShot <= 0)
                 Shot1();
         }
+        */
 
         //給水開始処理
         if (Input.GetButtonDown(string.Format("Player{0} Absorb", playerNo)))
@@ -147,12 +165,27 @@ public class DebugController : MonoBehaviour
         }
     }
 
+    // ショットの準備完了
+    private void CompleteShot()
+    {
+        // TODO チャージ用の処理の実装
+        this.controller.Shot(this.shotCharge, this.shotParent, () =>
+        {
+            delayMove = 0.5f;
+            delayShot = 0.5f;    
+        });
+
+        this.shotCharge = 0f;
+    }
+
     // 通常ショット１仮
     private void Shot1()
     {
-        this.controller.Shot(this.shotParent);
-        delayMove = 0.5f;
-        delayShot = 0.5f;
+        this.controller.Shot(1f, this.shotParent, () =>
+        {
+            delayMove = 0.5f;
+            delayShot = 0.5f;
+        });
     }
 
     private IEnumerator ShotSpray()

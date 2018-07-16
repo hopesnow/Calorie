@@ -66,14 +66,41 @@ public class PlayerController : MonoBehaviour
     }
 
     // 可能であればショットをする
-    public void Shot(Transform parent)
+    public void Shot(float chargeTime, Transform parent, Action successEvent)
     {
-        if (this.charge.Value > ChargePerShot)
+        if (chargeTime >= 3f && this.charge.Value > ChargePerShot * 5)
         {
+            // チャージショット強
             var shot = Instantiate(shotPrefab, parent);
             shot.transform.localPosition = this.transform.localPosition + new Vector3(0f, 1f, 0f);
-            shot.Init(this.transform.forward, this.gameObject.name);
+            shot.Init(this.transform.forward, this.gameObject.name, NormalShot.ChargeType.Charge2);
+            this.charge.Value -= ChargePerShot * 5;
+
+            successEvent();
+        }
+        else if (chargeTime >= 1f && this.charge.Value > ChargePerShot * 2)
+        {
+            // チャージショット
+            var shot = Instantiate(shotPrefab, parent);
+            shot.transform.localPosition = this.transform.localPosition + new Vector3(0f, 1f, 0f);
+            shot.Init(this.transform.forward, this.gameObject.name, NormalShot.ChargeType.Charge1);
+            this.charge.Value -= ChargePerShot * 2;
+
+            successEvent();
+        }
+        else if (this.charge.Value > ChargePerShot)
+        {
+            // 通常ショット
+            var shot = Instantiate(shotPrefab, parent);
+            shot.transform.localPosition = this.transform.localPosition + new Vector3(0f, 1f, 0f);
+            shot.Init(this.transform.forward, this.gameObject.name, NormalShot.ChargeType.Normal);
             this.charge.Value -= ChargePerShot;
+
+            successEvent();
+        }
+        else
+        {
+            // ショット失敗
         }
     }
 

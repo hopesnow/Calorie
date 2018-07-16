@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
+// プレイヤーの弾のチャージUI
 public class PlayerEnergy : MonoBehaviour
 {
     [SerializeField] private RectTransform rect;

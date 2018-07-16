@@ -1,4 +1,6 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 /// <summary>
@@ -13,6 +15,22 @@ public class NormalShot : MonoBehaviour
         Invalid,
     }
 
+    public enum ChargeType
+    {
+        Normal,
+        Charge1,
+        Charge2,
+    }
+
+    [Serializable]
+    public struct ShotTypeData
+    {
+        public ChargeType type;
+        public float scale;
+        public Color color;
+        public float power;
+    }
+
     [SerializeField] private ParticleSystem particle;
     [SerializeField] private Collider shotColl;
     [SerializeField] private float initSize = 1.75f;
@@ -25,9 +43,11 @@ public class NormalShot : MonoBehaviour
     [SerializeField] private float downAccel = 0.03f;
 
     [SerializeField] private float knockbackPower = 5f;
+    [SerializeField] private List<ShotTypeData> shotDatas;
 
     private Vector3 vec;
     private float speed;
+    private float correctPower = 1.0f;
 
     // 親オブジェクトの名前(あたり判定用)
     private string parentName = string.Empty;
@@ -42,11 +62,19 @@ public class NormalShot : MonoBehaviour
     /// 初期化処理
     /// </summary>
     /// <param name="vec">方向</param>
-    public void Init(Vector3 vec, string parentName)// , float spd = 1.0f, float scale = 1.0f)
+    public void Init(Vector3 vec, string parentName, ChargeType chargeType)// , float spd = 1.0f)
     {
         this.vec = vec.normalized;
         this.speed = initSpeed;
         this.parentName = parentName;
+        // this.transform.localScale = this.transform.localScale * scale;
+        // this.transform.localScale *= scale;
+
+        // ショットタイプごとの設定
+        var typeData = this.shotDatas.First(l => l.type == chargeType);
+        this.transform.localScale *= typeData.scale;
+        this.particle.startColor = typeData.color;
+        this.correctPower = typeData.power;
     }
 
     /// <summary>
@@ -114,7 +142,7 @@ public class NormalShot : MonoBehaviour
         var player = coll.gameObject.GetComponent<PlayerController>();
         if (player != null)
         {
-            var power = this.knockbackPower * Mathf.Sqrt(this.speed);
+            var power = this.knockbackPower * Mathf.Sqrt(this.speed) * this.correctPower;
             Debug.LogFormat("ショットパワー: {0}", this.speed);
             player.Knockback(this.vec, power);
             InvalidShot();

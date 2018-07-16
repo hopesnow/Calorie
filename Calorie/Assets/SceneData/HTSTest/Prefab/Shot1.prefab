@@ -79,6 +79,19 @@ MonoBehaviour:
   upAccel: 0.3
   downAccel: 0.03
   knockbackPower: 12000
+  shotDatas:
+  - type: 0
+    scale: 1
+    color: {r: 0.32941177, g: 0.72156864, b: 1, a: 0.78431374}
+    power: 1
+  - type: 1
+    scale: 1.5
+    color: {r: 0.33658966, g: 1, b: 0.32941175, a: 0.78431374}
+    power: 1.2
+  - type: 2
+    scale: 3
+    color: {r: 1, g: 0.32941175, b: 0.4261856, a: 0.78431374}
+    power: 1.5
 --- !u!135 &135062426674602432
 SphereCollider:
   m_ObjectHideFlags: 1
