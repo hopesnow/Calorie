@@ -9,6 +9,18 @@ public class FieldManager : MonoBehaviour
     public RectTransform uiCanvasRect;
     public Transform uiParent;
 
+    private int playerNum = 2;
+    public int PlayerNum { get { return playerNum; }
+        set
+        {
+            playerNum = value;
+            if (playerNum > 4) playerNum = 4;
+            if (playerNum < 2) playerNum = 2;
+
+        }
+    }
+    public int[] selectPlayerCharacter;
+
     private static FieldManager instance;
     public static FieldManager Instance { get { return instance; } }
 

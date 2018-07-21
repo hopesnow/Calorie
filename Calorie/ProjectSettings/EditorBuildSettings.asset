@@ -8,3 +8,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scene/HTSTest.unity
     guid: d47d5178251ed40dd8883eb65e49fae6
+  - enabled: 1
+    path: Assets/Scene/PlayerSelectTest.unity
+    guid: 19855012adb774d4bba876476151e216
+  m_configObjects: {}

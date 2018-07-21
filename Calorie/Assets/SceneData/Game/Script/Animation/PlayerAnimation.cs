@@ -122,4 +122,9 @@ public class PlayerAnimation : MonoBehaviour, IPlayerAnimation
         // isGameOver = true;
         // animator.SetFloat("Blend", 0f);
     }
+
+    public void SetPlayerNo(int receivedPlayerNo)
+    {
+        playerNo = receivedPlayerNo;
+    }
 }

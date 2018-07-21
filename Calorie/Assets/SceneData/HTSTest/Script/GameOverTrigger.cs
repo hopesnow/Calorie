@@ -9,14 +9,42 @@ public class GameOverTrigger : MonoBehaviour
     bool isFinish;
     [SerializeField]
     private Text finishText;
+    [SerializeField]
+    GameObject playerPrefab;
+    [SerializeField]
+    GameObject[] startPlayers;
+    [SerializeField]
+    Vector3[] playerSpawnLocation;
     private void Start()
     {
         isFinish = false;
-        playerCount = GameObject.FindGameObjectsWithTag("Player").Length;
-        Debug.Log(string.Format("Start with {0} Players", playerCount));
+//        playerCount = GameObject.FindGameObjectsWithTag("Player").Length;
         // test
-        playerCount = 2;
+        playerCount = FieldManager.Instance.PlayerNum;
+        Debug.Log(string.Format("Start with {0} Players", playerCount));
+        //playerCount = 4;
+        startPlayers = new GameObject[playerCount];
+        playerSpawnLocation = new Vector3[playerCount];
+        for(int playerNo = 0; playerNo < playerCount; playerNo++)
+        {
+            float spawnX = -6;
+            float spawnZ = 3;
+            if (playerNo % 2 == 1) spawnX = 6;
+            if (playerNo / 2 == 1) spawnZ = -3;
+            playerSpawnLocation[playerNo] = new Vector3(spawnX,0,spawnZ);
+            startPlayers[playerNo] = Instantiate(playerPrefab, playerSpawnLocation[playerNo], Quaternion.identity) as GameObject;
+            startPlayers[playerNo].transform.parent = this.transform.parent;
+            startPlayers[playerNo].transform.Rotate(new Vector3(0, 180, 0));
+            startPlayers[playerNo].name = string.Format("Player{0}", playerNo+1);
+            startPlayers[playerNo].GetComponent<DebugController>().SetPlayerNo(playerNo);
+            startPlayers[playerNo].GetComponent<PlayerAnimation>().SetPlayerNo(playerNo);
+        }
         finishText.enabled = false;
+    }
+
+    private void Init()
+    {
+
     }
 
     private void Update()

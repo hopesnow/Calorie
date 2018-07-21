@@ -5292,6 +5292,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shotPrefab: {fileID: 114420595936365774, guid: 2859039595d3a423790d5f929cf10c17,
     type: 2}
+  energyPrefab: {fileID: 114618076981821032, guid: 63fc27d357c4b4b928bc8b436beaf567,
+    type: 2}
 --- !u!114 &114343544256532432
 MonoBehaviour:
   m_ObjectHideFlags: 1

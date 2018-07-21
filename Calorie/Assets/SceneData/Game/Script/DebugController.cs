@@ -212,4 +212,9 @@ public class DebugController : MonoBehaviour
         isPlayer = false;
         this.gameObject.SetActive(false);
     }
+
+    public void SetPlayerNo(int receivedPlayerNo)
+    {
+        playerNo = receivedPlayerNo;
+    }
 }
