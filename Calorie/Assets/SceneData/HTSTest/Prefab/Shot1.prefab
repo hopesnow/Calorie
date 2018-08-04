@@ -87,11 +87,11 @@ MonoBehaviour:
   - type: 1
     scale: 1.5
     color: {r: 0.33658966, g: 1, b: 0.32941175, a: 0.78431374}
-    power: 1.2
+    power: 1.5
   - type: 2
     scale: 3
     color: {r: 1, g: 0.32941175, b: 0.4261856, a: 0.78431374}
-    power: 1.5
+    power: 3
 --- !u!135 &135062426674602432
 SphereCollider:
   m_ObjectHideFlags: 1

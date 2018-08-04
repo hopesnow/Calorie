@@ -9,8 +9,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private PlayerEnergy energyPrefab;
     private Rigidbody rigidbody;
 
-    private const int PerShot = 7;              // 100%から何発打
-    private const float MaxChargeSpeed = 3f;    // マックスになるために必要なチャージ時間
+    private const int PerShot = 20;             // 100%時に通常の何発分あるか
+    private const float MaxChargeSpeed = 5f;    // 最大チャージにかかる時間
     private ReactiveProperty<float> charge = new ReactiveProperty<float>();
     private float ChargePerShot { get { return 1f / PerShot; } }   // 一発あたりのcharge量
 
@@ -29,7 +29,7 @@ public class PlayerController : MonoBehaviour
         this.rigidbody = GetComponent<Rigidbody>();
         mover = GetComponent<IPlayerMover>();
 
-        this.charge.Value = 0.5f;
+        this.charge.Value = 0.75f;
 
         // UI系の初期化処理
         var energy = Instantiate(this.energyPrefab, FieldManager.Instance.uiParent);
@@ -68,17 +68,17 @@ public class PlayerController : MonoBehaviour
     // 可能であればショットをする
     public void Shot(float chargeTime, Transform parent, Action successEvent)
     {
-        if (chargeTime >= 3f && this.charge.Value > ChargePerShot * 5)
+        if (chargeTime >= 1.5f && this.charge.Value > ChargePerShot * 4)
         {
             // チャージショット強
             var shot = Instantiate(shotPrefab, parent);
             shot.transform.localPosition = this.transform.localPosition + new Vector3(0f, 1f, 0f);
             shot.Init(this.transform.forward, this.gameObject.name, NormalShot.ChargeType.Charge2);
-            this.charge.Value -= ChargePerShot * 5;
+            this.charge.Value -= ChargePerShot * 4;
 
             successEvent();
         }
-        else if (chargeTime >= 1f && this.charge.Value > ChargePerShot * 2)
+        else if (chargeTime >= 0.5f && this.charge.Value > ChargePerShot * 2)
         {
             // チャージショット
             var shot = Instantiate(shotPrefab, parent);
@@ -88,7 +88,7 @@ public class PlayerController : MonoBehaviour
 
             successEvent();
         }
-        else if (this.charge.Value > ChargePerShot)
+        else if (chargeTime > 0f && this.charge.Value > ChargePerShot)
         {
             // 通常ショット
             var shot = Instantiate(shotPrefab, parent);

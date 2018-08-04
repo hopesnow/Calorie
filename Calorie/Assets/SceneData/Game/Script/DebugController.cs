@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -171,14 +170,15 @@ public class DebugController : MonoBehaviour
         // TODO チャージ用の処理の実装
         this.controller.Shot(this.shotCharge, this.shotParent, () =>
         {
-            delayMove = 0.5f;
-            delayShot = 0.5f;    
+            delayMove = 0.3f;
+            delayShot = 0.3f;
         });
 
         this.shotCharge = 0f;
     }
 
     // 通常ショット１仮
+    /*
     private void Shot1()
     {
         this.controller.Shot(1f, this.shotParent, () =>
@@ -187,6 +187,7 @@ public class DebugController : MonoBehaviour
             delayShot = 0.5f;
         });
     }
+    */
 
     private IEnumerator ShotSpray()
     {
