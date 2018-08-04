@@ -10,13 +10,17 @@ public class FieldManager : MonoBehaviour
     public Transform uiParent;
 
     private int playerNum = 2;
-    public int PlayerNum { get { return playerNum; }
+    public int PlayerNum
+    {
+        get
+        {
+            return playerNum;
+        }
         set
         {
             playerNum = value;
             if (playerNum > 4) playerNum = 4;
             if (playerNum < 2) playerNum = 2;
-
         }
     }
     public int[] selectPlayerCharacter;
