@@ -48,8 +48,8 @@
 			{
 				v2f o;
 
-				float y = 0.3 *sin(_Time.y + v.vertex.x * 100);
-				float y2 = 0.3 * cos(_Time.z + v.vertex.z * 100);
+				float y = 0.5 *sin(_Time.y + v.vertex.x * 100);
+				float y2 = 0.5 * cos(_Time.z + v.vertex.z * 100);
 
 				v.vertex.y += y + y2;
 
