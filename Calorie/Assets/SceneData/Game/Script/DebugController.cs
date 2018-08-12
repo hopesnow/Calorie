@@ -26,6 +26,10 @@ public class DebugController : MonoBehaviour
     [SerializeField] private Transform shotParent;
     [SerializeField] private ParticleSystem shot1;
 
+    [SerializeField] private GameObject[] chargeEffectsPrefab;
+    private GameObject chargeEffect;
+    private int effectNo;
+
     private PlayerMoveState moveState = PlayerMoveState.Movable;
     private Vector3 input;
     private Vector3 initPos;
@@ -75,6 +79,11 @@ public class DebugController : MonoBehaviour
                 this.isPlayer = true;
             });
         }
+
+        chargeEffect = new GameObject();
+        SetCharge(-1);
+        chargeEffect.transform.parent = this.transform.parent;
+        chargeEffect.name = "player"+playerNo+" ChargeEffect";
     }
 
     // Update is called once per frame
@@ -162,6 +171,20 @@ public class DebugController : MonoBehaviour
         {
             this.delayShot -= Time.deltaTime;
         }
+        //チャージエフェクト変更処理.3種類前提
+        if (this.shotCharge >= 1.5f)
+        {
+            SetCharge(2);
+        }
+        else if (this.shotCharge >= 0.5f)
+        {
+            SetCharge(1);
+        }
+        else if (this.shotCharge > 0f)
+        {
+            SetCharge(0);
+        }
+        chargeEffect.transform.position = this.transform.position + new Vector3(0f, 0.52f, 0f);
     }
 
     // ショットの準備完了
@@ -175,6 +198,7 @@ public class DebugController : MonoBehaviour
         });
 
         this.shotCharge = 0f;
+        SetCharge(-1);
     }
 
     // 通常ショット１仮
@@ -210,6 +234,7 @@ public class DebugController : MonoBehaviour
 
     public void SetGameOver()
     {
+        SetCharge(-1);
         isPlayer = false;
         this.gameObject.SetActive(false);
     }
@@ -217,5 +242,33 @@ public class DebugController : MonoBehaviour
     public void SetPlayerNo(int receivedPlayerNo)
     {
         playerNo = receivedPlayerNo;
+    }
+
+    void SetCharge(int chargeVol)
+    {
+        if (effectNo == chargeVol)
+            return;
+
+        switch (chargeVol)
+        {
+            case 0:
+            case 1:
+            case 2:
+                chargeEffect.SetActive(true);
+                Destroy(chargeEffect);
+                chargeEffect = Instantiate(chargeEffectsPrefab[chargeVol]);
+                chargeEffect.name = "player" + playerNo + " ChargeEffect";
+                effectNo = chargeVol;
+                break;
+            default:
+                chargeEffect.SetActive(false);
+                Destroy(chargeEffect);
+                chargeEffect = new GameObject();
+                chargeEffect.name = "player" + playerNo + " ChargeEffect";
+                effectNo = -1;
+                Debug.Log("Chargefalse");
+                break;
+        }
+
     }
 }
