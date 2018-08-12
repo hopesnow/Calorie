@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class WarterFountain : MonoBehaviour
+public class WaterFountain : MonoBehaviour
 {
     [SerializeField] private Collider fountainColl;
 
