@@ -8,6 +8,7 @@ public class FieldManager : MonoBehaviour
     public Canvas uiCanvas;
     public RectTransform uiCanvasRect;
     public Transform uiParent;
+    public FountainManager fountain;
 
     private int playerNum = 2;
     public int PlayerNum
