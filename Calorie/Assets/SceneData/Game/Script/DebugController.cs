@@ -97,24 +97,24 @@ public class DebugController : MonoBehaviour
         // UI操作処理
         vec = this.input;
 
-        if (Input.GetAxisRaw(string.Format("Player{0} Vertical", playerNo)) > 0)
+        if (Input.GetAxis(string.Format("Player{0} Vertical", playerNo)) > 0)
         {
-            vec.z += 1;
+            vec.z += Input.GetAxis(string.Format("Player{0} Vertical", playerNo));
         }
 
-        if (Input.GetAxisRaw(string.Format("Player{0} Vertical", playerNo)) < 0)
+        if (Input.GetAxis(string.Format("Player{0} Vertical", playerNo)) < 0)
         {
-            vec.z -= 1;
+            vec.z += Input.GetAxis(string.Format("Player{0} Vertical", playerNo));
         }
 
-        if (Input.GetAxisRaw(string.Format("Player{0} Horizontal", playerNo)) < 0)
+        if (Input.GetAxis(string.Format("Player{0} Horizontal", playerNo)) < 0)
         {
-            vec.x -= 1;
+            vec.x += Input.GetAxis(string.Format("Player{0} Horizontal", playerNo));
         }
 
-        if (Input.GetAxisRaw(string.Format("Player{0} Horizontal", playerNo)) > 0)
+        if (Input.GetAxis(string.Format("Player{0} Horizontal", playerNo)) > 0)
         {
-            vec.x += 1;
+            vec.x += Input.GetAxis(string.Format("Player{0} Horizontal", playerNo));
         }
 
         // チャージ処理
